@@ -1,7 +1,16 @@
 exports.Query = {
   products: (parent, args, context) => {
     const products = context.products;
-    return products;
+    let filter = args.filter;
+    let filteredProducts = products;
+    if (filter) {
+      if (filter.onSale === true) {
+        filteredProducts = filteredProducts.filter((product) => {
+          return product.onSale;
+        });
+      }
+    }
+    return filteredProducts;
   },
   product: (parent, args, context) => {
     const { id } = args;
